@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
+import AsyncDisplayKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +19,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        Fabric.with([Crashlytics.self])
+        
+        let UIKitNavController = UINavigationController(rootViewController: PhotoFeedTableViewController())
+        UIKitNavController.tabBarItem.title = "UIKit"
+
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [UIKitNavController]
+        tabBarController.selectedIndex = 1
+        tabBarController.tabBar.tintColor = UIColor.mainBarTintColor()
+        
+        // Nav Bar appearance
+        
+        UINavigationBar.appearance().barTintColor = UIColor.mainBarTintColor()
+
+        window = UIWindow()
+        window?.backgroundColor = .white
+        window?.rootViewController = tabBarController
+        window?.makeKeyAndVisible()
+        
         return true
     }
 
